@@ -175,24 +175,29 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
   const [backgroundTransition, setBackgroundTransition] = useState(false)
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
+  const [blurAnimate, setBlurAnimate] = useState(false)
 
   const nextSlide = () => {
     if (currentSlide < slides.length - 1) {
       setIsTransitioning(true)
+      setBackgroundTransition(true)
       setTimeout(() => {
         setCurrentSlide(currentSlide + 1)
         setIsTransitioning(false)
-      }, 300)
+        setBackgroundTransition(false)
+      }, 500)
     }
   }
 
   const prevSlide = () => {
     if (currentSlide > 0) {
       setIsTransitioning(true)
+      setBackgroundTransition(true)
       setTimeout(() => {
         setCurrentSlide(currentSlide - 1)
         setIsTransitioning(false)
-      }, 300)
+        setBackgroundTransition(false)
+      }, 500)
     }
   }
 
@@ -206,7 +211,7 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
       if (onSlideChange) {
         onSlideChange(index)
       }
-    }, 300)
+    }, 500)
   }
 
   const minSwipeDistance = 50
@@ -241,6 +246,14 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
     }
   }, [targetSlide])
 
+  // Effect para animar o blur quando o slide muda
+  useEffect(() => {
+    if (!isTransitioning) {
+      // Start blur animation immediately when card appears
+      setBlurAnimate(true)
+    }
+  }, [currentSlide, isTransitioning])
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
@@ -271,8 +284,8 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
               src={currentSlideData.backgroundImage}
               alt="Background"
               fill
-              className={`object-cover transition-all duration-300 ease-in-out ${
-                backgroundTransition ? 'opacity-0' : 'opacity-100'
+              className={`object-cover transition-all duration-500 ease-in-out ${
+                backgroundTransition ? 'opacity-0 scale-105 blur-sm' : 'opacity-100 scale-100 blur-0'
               }`}
               style={{ 
                 filter: 'brightness(0.8) contrast(1.1)',
@@ -281,16 +294,20 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
               priority
             />
             {/* Overlay for better text readability */}
-            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+            <div className={`absolute inset-0 bg-black bg-opacity-50 transition-all duration-500 ease-in-out ${
+              backgroundTransition ? 'opacity-0' : 'opacity-100'
+            }`}></div>
             {/* Animated particles overlay */}
             <CarouselParticles />
           </div>
         ) : (
-          <div className={`w-full h-full bg-gradient-to-br from-formo-dark via-formo-dark to-formo-orange transition-all duration-300 ease-in-out ${
-            backgroundTransition ? 'opacity-0' : 'opacity-100'
+          <div className={`w-full h-full bg-gradient-to-br from-formo-dark via-formo-dark to-formo-orange transition-all duration-500 ease-in-out ${
+            backgroundTransition ? 'opacity-0 scale-105' : 'opacity-100 scale-100'
           }`}>
             {/* Overlay for better text readability */}
-            <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+            <div className={`absolute inset-0 bg-black bg-opacity-40 transition-all duration-500 ease-in-out ${
+              backgroundTransition ? 'opacity-0' : 'opacity-100'
+            }`}></div>
             {/* Animated particles overlay */}
             <CarouselParticles />
           </div>
@@ -362,7 +379,9 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
           isTransitioning ? 'opacity-0 transform scale-95 translate-y-4' : 'opacity-100 transform scale-100 translate-y-0'
         }`}>
           {currentSlideData.isLogo ? (
-            <div className="glass-dark rounded-2xl sm:rounded-3xl p-6 sm:p-12">
+            <div className={`glass-dark rounded-2xl sm:rounded-3xl p-6 sm:p-12 transition-opacity duration-500 ease-in-out ${
+              isTransitioning ? 'opacity-0' : 'opacity-100'
+            } ${blurAnimate ? 'blur-animate' : ''}`}>
               {currentSlideData.showBothLogos ? (
                 <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8">
                   <Image
@@ -409,7 +428,9 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
               </p>
             </div>
           ) : currentSlideData.id === 1 ? (
-            <div className="glass-dark rounded-2xl sm:rounded-3xl p-6 sm:p-12">
+            <div className={`glass-dark rounded-2xl sm:rounded-3xl p-6 sm:p-12 transition-opacity duration-500 ease-in-out ${
+              isTransitioning ? 'opacity-0' : 'opacity-100'
+            } ${blurAnimate ? 'blur-animate' : ''}`}>
               <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8">
                 <Image
                   src="/BRASÃO.png"
@@ -456,7 +477,9 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
               )}
             </div>
           ) : (
-            <div className="glass-dark rounded-2xl sm:rounded-3xl p-6 sm:p-12">
+            <div className={`glass-dark rounded-2xl sm:rounded-3xl p-6 sm:p-12 transition-opacity duration-500 ease-in-out ${
+              isTransitioning ? 'opacity-0' : 'opacity-100'
+            } ${blurAnimate ? 'blur-animate' : ''}`}>
               <div className="mb-6 sm:mb-8">
                 <Image
                   src="/BRASÃO.png"

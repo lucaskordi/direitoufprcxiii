@@ -32,9 +32,32 @@ body {
   
   .glass-dark {
     background: rgba(13, 13, 13, 0.3);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(0px);
     border: 1px solid rgba(255, 236, 210, 0.1);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    transition: backdrop-filter 0.8s ease-out, -webkit-backdrop-filter 0.8s ease-out;
+  }
+  
+  .glass-dark.blur-active {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  @keyframes blurIn {
+    0% {
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+    }
+    100% {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+  }
+  
+  .glass-dark.blur-animate {
+    animation: blurIn 0.8s ease-out forwards;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
   }
   
   .glass-orange {
