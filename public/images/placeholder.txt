@@ -1,0 +1,2 @@
+This folder is for static images and assets.
+Place your images here and reference them in your components.

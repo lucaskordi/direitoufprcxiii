@@ -1,0 +1,97 @@
+/* Codec Font Family - Modern sans-serif */
+@font-face {
+  font-family: 'Codec Cold';
+  src: url('./CODEC-COLD-REGULAR-OTF.OTF') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Codec Cold';
+  src: url('./CODEC-COLD-REGULAR-ITALIC-OTF.OTF') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Codec Cold';
+  src: url('./CODEC-COLD-BOLD-OTF.OTF') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Codec Cold';
+  src: url('./CODEC-COLD-BOLD-ITALIC-OTF.OTF') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Codec Cold';
+  src: url('./CODEC-COLD-LIGHT-OTF.OTF') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Codec Cold';
+  src: url('./CODEC-COLD-LIGHT-ITALIC-OTF.OTF') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Codec Warm */
+@font-face {
+  font-family: 'Codec Warm';
+  src: url('./CODEC-WARM-REGULAR-OTF.OTF') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Codec Warm';
+  src: url('./CODEC-WARM-REGULAR-ITALIC-OTF.OTF') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Codec Warm';
+  src: url('./CODEC-WARM-BOLD-OTF.OTF') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Codec Warm';
+  src: url('./CODEC-WARM-BOLD-ITALIC-OTF.OTF') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Codec Warm';
+  src: url('./CODEC-WARM-LIGHT-OTF.OTF') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Codec Warm';
+  src: url('./CODEC-WARM-LIGHT-ITALIC-OTF.OTF') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}

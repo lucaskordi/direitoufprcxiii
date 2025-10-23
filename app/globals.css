@@ -1,0 +1,106 @@
+@import url('/fonts/fonts.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0d0d0d;
+  --foreground: #ffecd2;
+  --formo-cream: #ffecd2;
+  --formo-orange: #f16755;
+  --formo-dark: #0d0d0d;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .glass {
+    background: rgba(255, 236, 210, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 236, 210, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
+  
+  .glass-dark {
+    background: rgba(13, 13, 13, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 236, 210, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  }
+  
+  .glass-orange {
+    background: rgba(241, 103, 85, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(241, 103, 85, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(241, 103, 85, 0.2);
+  }
+  
+  /* Custom Scrollbar for Timeline Menu */
+  .timeline-scroll::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .timeline-scroll::-webkit-scrollbar-track {
+    background: rgba(13, 13, 13, 0.3);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+  }
+  
+  .timeline-scroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #f16755, #ffecd2);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 236, 210, 0.2);
+    box-shadow: 0 2px 8px rgba(241, 103, 85, 0.3);
+  }
+  
+  .timeline-scroll::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #ffecd2, #f16755);
+    box-shadow: 0 4px 12px rgba(241, 103, 85, 0.5);
+  }
+  
+  /* Firefox scrollbar */
+  .timeline-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #f16755 rgba(13, 13, 13, 0.3);
+  }
+  
+  /* Menu slide animation */
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.98);
+    }
+  }
+  
+  .menu-slide-down {
+    animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .menu-slide-up {
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}

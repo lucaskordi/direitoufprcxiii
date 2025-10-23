@@ -1,0 +1,40 @@
+/* Main Fonts CSS - Import all font families */
+
+/* Custom Fonts - Already installed */
+@import './codec.css';
+@import './twisthead.css';
+
+/* Google Fonts - CSS files ready for font files */
+@import './roboto.css';
+@import './opensans.css';
+@import './playfair.css';
+@import './montserrat.css';
+
+/* Font utility classes */
+.font-codec-cold {
+  font-family: 'Codec Cold', system-ui, -apple-system, sans-serif;
+}
+
+.font-codec-warm {
+  font-family: 'Codec Warm', system-ui, -apple-system, sans-serif;
+}
+
+.font-twisthead {
+  font-family: 'Twisthead', system-ui, -apple-system, sans-serif;
+}
+
+.font-roboto {
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+}
+
+.font-open-sans {
+  font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
+}
+
+.font-playfair {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-montserrat {
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+}
