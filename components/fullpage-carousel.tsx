@@ -257,28 +257,30 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
         )}
       </div>
 
-      {/* Navigation Dots - Moved to bottom */}
-      <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 z-20 flex space-x-3">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide
-                ? 'bg-formo-orange scale-125'
-                : 'bg-formo-cream bg-opacity-50 hover:bg-opacity-75'
-            }`}
-          />
-        ))}
+      {/* Navigation Dots - Responsive layout */}
+      <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 z-20">
+        <div className="flex flex-wrap justify-center gap-2 max-w-xs sm:max-w-none">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+                index === currentSlide
+                  ? 'bg-formo-orange scale-125'
+                  : 'bg-formo-cream bg-opacity-50 hover:bg-opacity-75'
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
-      {/* Navigation Arrows */}
+      {/* Navigation Arrows - Mobile responsive positioning */}
       <button
         onClick={prevSlide}
         disabled={currentSlide === 0}
-        className="fixed left-8 top-1/2 transform -translate-y-1/2 z-20 p-4 glass rounded-full hover:glass-orange transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="fixed left-2 sm:left-8 top-1/2 sm:top-1/2 bottom-20 sm:bottom-auto transform -translate-y-1/2 sm:-translate-y-1/2 z-20 p-3 sm:p-4 glass rounded-full hover:glass-orange transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <svg className="w-6 h-6 text-formo-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-formo-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
@@ -286,106 +288,108 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
       <button
         onClick={nextSlide}
         disabled={currentSlide === slides.length - 1}
-        className="fixed right-8 top-1/2 transform -translate-y-1/2 z-20 p-4 glass rounded-full hover:glass-orange transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="fixed right-2 sm:right-8 top-1/2 sm:top-1/2 bottom-20 sm:bottom-auto transform -translate-y-1/2 sm:-translate-y-1/2 z-20 p-3 sm:p-4 glass rounded-full hover:glass-orange transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <svg className="w-6 h-6 text-formo-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-formo-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
 
       {/* Slide Content */}
-      <div className="relative z-10 h-full flex items-center justify-center px-8">
+      <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-8 pb-20 sm:pb-8">
         <div className={`max-w-4xl mx-auto text-center transition-all duration-1000 ease-in-out ${
           isTransitioning ? 'opacity-0 transform scale-95 translate-y-4' : 'opacity-100 transform scale-100 translate-y-0'
         }`}>
           {currentSlideData.isLogo ? (
-            <div className="glass-dark rounded-3xl p-12">
+            <div className="glass-dark rounded-2xl sm:rounded-3xl p-6 sm:p-12">
               <Image
                 src="/logoformo.png"
                 alt="Logo Formô"
                 width={400}
                 height={200}
-                className="mx-auto mb-8"
+                className="mx-auto mb-6 sm:mb-8 w-64 sm:w-full h-auto"
               />
-              <h1 className="text-4xl font-codec-cold text-formo-cream mb-4">
+              <h1 className="text-2xl sm:text-4xl font-codec-cold text-formo-cream mb-3 sm:mb-4">
                 {currentSlideData.title}
               </h1>
-              <p className="text-xl text-formo-cream opacity-80">
+              <p className="text-lg sm:text-xl text-formo-cream opacity-80">
                 {currentSlideData.description}
               </p>
             </div>
           ) : currentSlideData.id === 1 ? (
-            <div className="glass-dark rounded-3xl p-12">
-              <div className="mb-8 flex items-center justify-center space-x-8">
+            <div className="glass-dark rounded-2xl sm:rounded-3xl p-6 sm:p-12">
+              <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8">
                 <Image
                   src="/BRASÃO.png"
                   alt="Brasão da Turma"
                   width={120}
                   height={120}
+                  className="w-20 h-20 sm:w-30 sm:h-30"
                 />
                 <Image
                   src="/logoformo.png"
                   alt="Logo Formô"
                   width={120}
                   height={120}
+                  className="w-20 h-20 sm:w-30 sm:h-30"
                 />
               </div>
               
-              <h1 className="text-5xl font-codec-cold text-formo-cream mb-6">
+              <h1 className="text-3xl sm:text-5xl font-codec-cold text-formo-cream mb-4 sm:mb-6">
                 {currentSlideData.title}
               </h1>
               
               {currentSlideData.date && (
-                <div className="text-2xl font-codec-warm text-formo-orange mb-6">
+                <div className="text-lg sm:text-2xl font-codec-warm text-formo-orange mb-4 sm:mb-6">
                   {currentSlideData.date}
                 </div>
               )}
               
-              <p className="text-xl text-formo-cream opacity-90 mb-8 leading-relaxed">
+              <p className="text-base sm:text-xl text-formo-cream opacity-90 mb-6 sm:mb-8 leading-relaxed">
                 {currentSlideData.description}
               </p>
               
               {currentSlideData.isCompleted && (
-                <div className="inline-flex items-center px-6 py-3 bg-green-500 bg-opacity-20 backdrop-blur-sm border border-green-400 rounded-full">
-                  <svg className="w-5 h-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-green-500 bg-opacity-20 backdrop-blur-sm border border-green-400 rounded-full">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-green-400 font-codec-warm">CONCLUÍDO</span>
+                  <span className="text-sm sm:text-base text-green-400 font-codec-warm">CONCLUÍDO</span>
                 </div>
               )}
             </div>
           ) : (
-            <div className="glass-dark rounded-3xl p-12">
-              <div className="mb-8">
+            <div className="glass-dark rounded-2xl sm:rounded-3xl p-6 sm:p-12">
+              <div className="mb-6 sm:mb-8">
                 <Image
                   src="/BRASÃO.png"
                   alt="Brasão da Turma"
                   width={120}
                   height={120}
-                  className="mx-auto mb-6"
+                  className="mx-auto mb-4 sm:mb-6 w-20 h-20 sm:w-30 sm:h-30"
                 />
               </div>
               
-              <h1 className="text-5xl font-codec-cold text-formo-cream mb-6">
+              <h1 className="text-3xl sm:text-5xl font-codec-cold text-formo-cream mb-4 sm:mb-6">
                 {currentSlideData.title}
               </h1>
               
               {currentSlideData.date && (
-                <div className="text-2xl font-codec-warm text-formo-orange mb-6">
+                <div className="text-lg sm:text-2xl font-codec-warm text-formo-orange mb-4 sm:mb-6">
                   {currentSlideData.date}
                 </div>
               )}
               
-              <p className="text-xl text-formo-cream opacity-90 mb-8 leading-relaxed">
+              <p className="text-base sm:text-xl text-formo-cream opacity-90 mb-6 sm:mb-8 leading-relaxed">
                 {currentSlideData.description}
               </p>
               
               {currentSlideData.isCompleted && (
-                <div className="inline-flex items-center px-6 py-3 bg-green-500 bg-opacity-20 backdrop-blur-sm border border-green-400 rounded-full">
-                  <svg className="w-5 h-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-green-500 bg-opacity-20 backdrop-blur-sm border border-green-400 rounded-full">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-green-400 font-codec-warm">CONCLUÍDO</span>
+                  <span className="text-sm sm:text-base text-green-400 font-codec-warm">CONCLUÍDO</span>
                 </div>
               )}
             </div>
