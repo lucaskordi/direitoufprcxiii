@@ -168,6 +168,8 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [backgroundTransition, setBackgroundTransition] = useState(false)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
 
   const nextSlide = () => {
     if (currentSlide < slides.length - 1) {
@@ -202,6 +204,31 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
     }, 300)
   }
 
+  const minSwipeDistance = 50
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+
+    if (isLeftSwipe && currentSlide < slides.length - 1) {
+      nextSlide()
+    }
+    if (isRightSwipe && currentSlide > 0) {
+      prevSlide()
+    }
+  }
+
   // Effect para rolar suavemente quando targetSlide mudar
   useEffect(() => {
     if (targetSlide !== undefined && targetSlide !== currentSlide) {
@@ -225,7 +252,12 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
   const currentSlideData = slides[currentSlide]
 
   return (
-    <div className="relative h-screen overflow-hidden">
+    <div 
+      className="relative h-screen overflow-hidden"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         {currentSlideData.backgroundImage ? (
@@ -257,14 +289,14 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
         )}
       </div>
 
-      {/* Navigation Dots - Responsive layout */}
-      <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 z-20">
-        <div className="flex flex-wrap justify-center gap-2 max-w-xs sm:max-w-none">
+      {/* Navigation Dots - Desktop only */}
+      <div className="hidden sm:block fixed bottom-20 left-1/2 transform -translate-x-1/2 z-20">
+        <div className="flex justify-center gap-2">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 shadow-lg ${
+              className={`w-3 h-3 rounded-full transition-all duration-300 shadow-lg ${
                 index === currentSlide
                   ? 'bg-formo-orange scale-125 shadow-formo-orange shadow-lg'
                   : 'bg-formo-cream bg-opacity-50 hover:bg-opacity-75 shadow-formo-cream shadow-md'
@@ -279,29 +311,47 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
         </div>
       </div>
 
-      {/* Navigation Arrows - Mobile responsive positioning */}
-      <button
-        onClick={prevSlide}
-        disabled={currentSlide === 0}
-        className="fixed left-2 sm:left-8 top-1/2 sm:top-1/2 bottom-20 sm:bottom-auto transform -translate-y-1/2 sm:-translate-y-1/2 z-20 p-3 sm:p-4 glass rounded-full hover:glass-orange transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-formo-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
+      {/* Navigation Arrows - Centered below content */}
+      <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-20 flex items-center gap-4">
+        <button
+          onClick={prevSlide}
+          disabled={currentSlide === 0}
+          className="glass hover:glass-orange transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          style={{
+            width: '3rem',
+            height: '3rem',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <svg className="w-5 h-5 text-formo-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
 
-      <button
-        onClick={nextSlide}
-        disabled={currentSlide === slides.length - 1}
-        className="fixed right-2 sm:right-8 top-1/2 sm:top-1/2 bottom-20 sm:bottom-auto transform -translate-y-1/2 sm:-translate-y-1/2 z-20 p-3 sm:p-4 glass rounded-full hover:glass-orange transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-formo-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
+        <button
+          onClick={nextSlide}
+          disabled={currentSlide === slides.length - 1}
+          className="glass hover:glass-orange transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          style={{
+            width: '3rem',
+            height: '3rem',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <svg className="w-5 h-5 text-formo-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
 
       {/* Slide Content */}
-      <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-8 pb-20 sm:pb-8">
+      <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-8">
         <div className={`max-w-4xl mx-auto text-center transition-all duration-1000 ease-in-out ${
           isTransitioning ? 'opacity-0 transform scale-95 translate-y-4' : 'opacity-100 transform scale-100 translate-y-0'
         }`}>
