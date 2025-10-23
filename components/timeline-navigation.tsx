@@ -254,7 +254,7 @@ export default function TimelineNavigation({ onEventClick, currentEventId }: Tim
                           </div>
                           <div className="flex items-center space-x-2">
                             {event.isCompleted && (
-                              <div className="w-2 h-2 bg-formo-orange rounded-full"></div>
+                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                             )}
                             {currentEventId === event.id - 1 && (
                               <div className="w-2 h-2 bg-formo-cream rounded-full animate-pulse"></div>

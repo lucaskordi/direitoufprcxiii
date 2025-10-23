@@ -8,10 +8,11 @@ interface CarouselSlide {
   id: number
   title: string
   date?: string
-  description: string
+  description?: string
   backgroundImage?: string
   isCompleted?: boolean
   isLogo?: boolean
+  showBothLogos?: boolean
 }
 
 const slides: CarouselSlide[] = [
@@ -40,6 +41,7 @@ const slides: CarouselSlide[] = [
     title: 'Folia Universitária',
     date: 'Sábado - 04.10',
     description: 'Evento de integração e confraternização da turma',
+    backgroundImage: '/slide04.jpg',
     isCompleted: true
   },
   {
@@ -53,13 +55,14 @@ const slides: CarouselSlide[] = [
     id: 6,
     title: 'JOIA Curitiba',
     date: 'De 25.10 a 09.11',
-    description: 'Participação de membros da comissão na JOIA Curitiba (Atlética)'
+    description: 'Participação de membros da comissão na JOIA Curitiba (Atlética)',
+    backgroundImage: '/slide06.jpg'
   },
   {
     id: 7,
     title: 'Med in Eden',
     date: 'Sexta - 07.11',
-    description: 'Evento médico organizado pela turma'
+    backgroundImage: '/slide07.jpg?v=3'
   },
   {
     id: 8,
@@ -95,7 +98,8 @@ const slides: CarouselSlide[] = [
     id: 13,
     title: 'Banho de Lama',
     date: 'Sexta - 16.01',
-    description: 'Vendas de kit para calouros da turma CXIV'
+    description: 'Vendas de kit para calouros da turma CXIV',
+    backgroundImage: '/slide13.jpg'
   },
   {
     id: 14,
@@ -153,9 +157,10 @@ const slides: CarouselSlide[] = [
   },
   {
     id: 23,
-    title: 'Formô',
+    title: '',
     description: 'Nossa parceira nesta jornada',
-    isLogo: true
+    isLogo: true,
+    showBothLogos: true
   }
 ]
 
@@ -269,7 +274,10 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
               className={`object-cover transition-all duration-300 ease-in-out ${
                 backgroundTransition ? 'opacity-0' : 'opacity-100'
               }`}
-              style={{ filter: 'brightness(0.8) contrast(1.1)' }}
+              style={{ 
+                filter: 'brightness(0.8) contrast(1.1)',
+                objectPosition: 'center center'
+              }}
               priority
             />
             {/* Overlay for better text readability */}
@@ -311,44 +319,42 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
         </div>
       </div>
 
-      {/* Navigation Arrows - Centered below content */}
-      <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-20 flex items-center gap-4">
-        <button
-          onClick={prevSlide}
-          disabled={currentSlide === 0}
-          className="glass hover:glass-orange transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-          style={{
-            width: '3rem',
-            height: '3rem',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <svg className="w-5 h-5 text-formo-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
+      {/* Navigation Arrows - Mobile below content, Desktop center */}
+      <button
+        onClick={prevSlide}
+        disabled={currentSlide === 0}
+        className="fixed left-2 sm:left-8 top-1/2 sm:top-1/2 bottom-24 sm:bottom-auto transform -translate-y-1/2 sm:-translate-y-1/2 z-20 glass hover:glass-orange transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        style={{
+          width: '3rem',
+          height: '3rem',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-formo-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
 
-        <button
-          onClick={nextSlide}
-          disabled={currentSlide === slides.length - 1}
-          className="glass hover:glass-orange transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-          style={{
-            width: '3rem',
-            height: '3rem',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <svg className="w-5 h-5 text-formo-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
+      <button
+        onClick={nextSlide}
+        disabled={currentSlide === slides.length - 1}
+        className="fixed right-2 sm:right-8 top-1/2 sm:top-1/2 bottom-24 sm:bottom-auto transform -translate-y-1/2 sm:-translate-y-1/2 z-20 glass hover:glass-orange transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        style={{
+          width: '3rem',
+          height: '3rem',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-formo-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
 
       {/* Slide Content */}
       <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-8">
@@ -357,21 +363,47 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
         }`}>
           {currentSlideData.isLogo ? (
             <div className="glass-dark rounded-2xl sm:rounded-3xl p-6 sm:p-12">
-              <Image
-                src="/logoformo.png"
-                alt="Logo Formô"
-                width={400}
-                height={200}
-                className="mx-auto mb-6 sm:mb-8 w-64 sm:w-96 h-auto object-contain"
-                style={{ 
-                  aspectRatio: '2/1',
-                  objectFit: 'contain',
-                  objectPosition: 'center'
-                }}
-              />
-              <h1 className="text-2xl sm:text-4xl font-codec-cold text-formo-cream mb-3 sm:mb-4">
-                {currentSlideData.title}
-              </h1>
+              {currentSlideData.showBothLogos ? (
+                <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8">
+                  <Image
+                    src="/BRASÃO.png"
+                    alt="Brasão da Turma"
+                    width={120}
+                    height={120}
+                    className="w-20 h-20 sm:w-30 sm:h-30"
+                  />
+                  <Image
+                    src="/logoformo.png"
+                    alt="Logo Formô"
+                    width={200}
+                    height={100}
+                    className="w-24 h-12 sm:w-32 sm:h-16"
+                    style={{ 
+                      aspectRatio: '2/1',
+                      objectFit: 'contain',
+                      objectPosition: 'center'
+                    }}
+                  />
+                </div>
+              ) : (
+                <Image
+                  src="/logoformo.png"
+                  alt="Logo Formô"
+                  width={400}
+                  height={200}
+                  className="mx-auto mb-6 sm:mb-8 w-64 sm:w-96 h-auto object-contain"
+                  style={{ 
+                    aspectRatio: '2/1',
+                    objectFit: 'contain',
+                    objectPosition: 'center'
+                  }}
+                />
+              )}
+              {currentSlideData.title && (
+                <h1 className="text-2xl sm:text-4xl font-codec-cold text-formo-cream mb-3 sm:mb-4">
+                  {currentSlideData.title}
+                </h1>
+              )}
               <p className="text-lg sm:text-xl text-formo-cream opacity-80">
                 {currentSlideData.description}
               </p>
