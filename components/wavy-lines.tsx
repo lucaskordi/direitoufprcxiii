@@ -20,6 +20,24 @@ export default function WavyLines() {
 
     console.log('Canvas found, starting animation')
 
+    const getResponsiveValues = () => {
+      const width = window.innerWidth
+      const height = window.innerHeight
+      const minDimension = Math.min(width, height)
+      
+      return {
+        width,
+        height,
+        minDimension,
+        mainLineWidth: Math.max(20, Math.min(160, minDimension * 0.08)),
+        secondaryLineWidth: Math.max(10, Math.min(80, minDimension * 0.04)),
+        shadowBlur: Math.max(10, Math.min(60, minDimension * 0.03)),
+        secondaryShadowBlur: Math.max(5, Math.min(30, minDimension * 0.015)),
+        waveAmplitude: Math.max(20, Math.min(120, minDimension * 0.06)),
+        points: Math.max(100, Math.min(300, Math.floor(minDimension * 0.3)))
+      }
+    }
+
     const resizeCanvas = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
@@ -35,19 +53,20 @@ export default function WavyLines() {
     console.log('WavyLines component mounted and animating')
 
     const drawWavyLine = (x: number, y: number, width: number, height: number, direction: 'horizontal' | 'vertical') => {
-      // Linha principal - MUITO MAIS GROSSA
+      const responsive = getResponsiveValues()
+      
       ctx.strokeStyle = '#f16755'
-      ctx.lineWidth = 60
+      ctx.lineWidth = responsive.mainLineWidth
       ctx.lineCap = 'round'
       ctx.shadowColor = '#f16755'
-      ctx.shadowBlur = 30
+      ctx.shadowBlur = responsive.shadowBlur
       ctx.shadowOffsetX = 0
       ctx.shadowOffsetY = 0
 
       ctx.beginPath()
 
       if (direction === 'horizontal') {
-        const points = 200
+        const points = responsive.points
         for (let i = 0; i <= points; i++) {
           const progress = i / points
           const waveX = x + progress * width
@@ -60,7 +79,7 @@ export default function WavyLines() {
           }
         }
       } else {
-        const points = 200
+        const points = responsive.points
         for (let i = 0; i <= points; i++) {
           const progress = i / points
           const waveY = y + progress * height
@@ -76,14 +95,13 @@ export default function WavyLines() {
 
       ctx.stroke()
 
-      // Linha secundária com opacidade reduzida - TAMBÉM MAIS GROSSA
       ctx.strokeStyle = 'rgba(241, 103, 85, 0.4)'
-      ctx.lineWidth = 30
-      ctx.shadowBlur = 20
+      ctx.lineWidth = responsive.secondaryLineWidth
+      ctx.shadowBlur = responsive.secondaryShadowBlur
       ctx.beginPath()
 
       if (direction === 'horizontal') {
-        const points = 200
+        const points = responsive.points
         for (let i = 0; i <= points; i++) {
           const progress = i / points
           const waveX = x + progress * width
@@ -96,7 +114,7 @@ export default function WavyLines() {
           }
         }
       } else {
-        const points = 200
+        const points = responsive.points
         for (let i = 0; i <= points; i++) {
           const progress = i / points
           const waveY = y + progress * height
@@ -122,29 +140,27 @@ export default function WavyLines() {
         console.log('Animating frame:', time, 'Canvas size:', canvas.width, 'x', canvas.height)
       }
 
-      // Salvar o estado do canvas
+      const responsive = getResponsiveValues()
+
       ctx.save()
       
-      // Rotacionar o canvas 45 graus
       ctx.translate(canvas.width / 2, canvas.height / 2)
-      ctx.rotate(Math.PI / 4) // 45 graus
+      ctx.rotate(Math.PI / 4)
       ctx.translate(-canvas.width / 2, -canvas.height / 2)
 
-      // Linha ondulada canto superior esquerdo - MUITO GROSSA
       ctx.strokeStyle = '#f16755'
-      ctx.lineWidth = 160
+      ctx.lineWidth = responsive.mainLineWidth
       ctx.lineCap = 'round'
       ctx.shadowColor = '#f16755'
-      ctx.shadowBlur = 60
+      ctx.shadowBlur = responsive.shadowBlur
       ctx.shadowOffsetX = 0
       ctx.shadowOffsetY = 0
       
       ctx.beginPath()
-      for (let i = 0; i <= 200; i++) {
-        const progress = i / 200
-        // Linha do canto superior direito - vai da direita para esquerda
-        const x = canvas.width * 0.05 + (progress * (canvas.width * 1.2 + 400))
-        const y = canvas.height * 0.05 + Math.sin(progress * Math.PI * 4 + time * 0.005) * 80
+      for (let i = 0; i <= responsive.points; i++) {
+        const progress = i / responsive.points
+        const x = canvas.width * 0.05 + (progress * (canvas.width * 1.2 + responsive.minDimension * 0.2))
+        const y = canvas.height * 0.05 + Math.sin(progress * Math.PI * 4 + time * 0.005) * responsive.waveAmplitude
         
         if (i === 0) {
           ctx.moveTo(x, y)
@@ -154,13 +170,11 @@ export default function WavyLines() {
       }
       ctx.stroke()
 
-      // Linha ondulada canto inferior esquerdo - réplica da direita rotacionada 180°
       ctx.beginPath()
-      for (let i = 0; i <= 200; i++) {
-        const progress = i / 200
-        // Linha do canto inferior esquerdo - vai da esquerda para direita (180° da direita)
-        const x = canvas.width * 0.95 - (progress * (canvas.width * 1.2 + 400))
-        const y = canvas.height * 0.95 - Math.sin(progress * Math.PI * 4 + time * 0.005) * 80
+      for (let i = 0; i <= responsive.points; i++) {
+        const progress = i / responsive.points
+        const x = canvas.width * 0.95 - (progress * (canvas.width * 1.2 + responsive.minDimension * 0.2))
+        const y = canvas.height * 0.95 - Math.sin(progress * Math.PI * 4 + time * 0.005) * responsive.waveAmplitude
         
         if (i === 0) {
           ctx.moveTo(x, y)
@@ -170,7 +184,6 @@ export default function WavyLines() {
       }
       ctx.stroke()
 
-      // Restaurar o estado do canvas
       ctx.restore()
 
       animationId = requestAnimationFrame(animate)
@@ -186,25 +199,29 @@ export default function WavyLines() {
 
   return (
     <div 
-      className="fixed inset-0 pointer-events-none"
+      className="fixed inset-0 pointer-events-none w-full h-full"
       style={{ 
         zIndex: 5,
         position: 'fixed',
         top: 0,
         left: 0,
         width: '100vw',
-        height: '100vh'
+        height: '100vh',
+        overflow: 'hidden'
       }}
     >
       <canvas
         ref={canvasRef}
+        className="w-full h-full block"
         style={{ 
           position: 'absolute',
           top: 0,
           left: 0,
           width: '100%',
           height: '100%',
-          display: 'block'
+          display: 'block',
+          maxWidth: '100%',
+          maxHeight: '100%'
         }}
       />
     </div>
