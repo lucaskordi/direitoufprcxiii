@@ -264,11 +264,16 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+              className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 shadow-lg ${
                 index === currentSlide
-                  ? 'bg-formo-orange scale-125'
-                  : 'bg-formo-cream bg-opacity-50 hover:bg-opacity-75'
+                  ? 'bg-formo-orange scale-125 shadow-formo-orange shadow-lg'
+                  : 'bg-formo-cream bg-opacity-50 hover:bg-opacity-75 shadow-formo-cream shadow-md'
               }`}
+              style={{
+                boxShadow: index === currentSlide 
+                  ? '0 6px 20px rgba(241, 103, 85, 0.8), 0 4px 12px rgba(241, 103, 85, 0.6), 0 2px 6px rgba(241, 103, 85, 0.4)'
+                  : '0 2px 8px rgba(255, 236, 210, 0.4), 0 1px 4px rgba(255, 236, 210, 0.2)'
+              }}
             />
           ))}
         </div>
@@ -307,7 +312,12 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
                 alt="Logo Formô"
                 width={400}
                 height={200}
-                className="mx-auto mb-6 sm:mb-8 w-64 sm:w-full h-auto"
+                className="mx-auto mb-6 sm:mb-8 w-64 sm:w-96 h-auto object-contain"
+                style={{ 
+                  aspectRatio: '2/1',
+                  objectFit: 'contain',
+                  objectPosition: 'center'
+                }}
               />
               <h1 className="text-2xl sm:text-4xl font-codec-cold text-formo-cream mb-3 sm:mb-4">
                 {currentSlideData.title}
@@ -329,9 +339,14 @@ export default function FullPageCarousel({ targetSlide, onSlideChange }: FullPag
                 <Image
                   src="/logoformo.png"
                   alt="Logo Formô"
-                  width={120}
-                  height={120}
-                  className="w-20 h-20 sm:w-30 sm:h-30"
+                  width={200}
+                  height={100}
+                  className="w-24 h-12 sm:w-32 sm:h-16 object-contain"
+                  style={{ 
+                    aspectRatio: '2/1',
+                    objectFit: 'contain',
+                    objectPosition: 'center'
+                  }}
                 />
               </div>
               

@@ -31,18 +31,10 @@ export default function WavyLines() {
         height,
         minDimension,
         isMobile,
-        mainLineWidth: isMobile 
-          ? Math.max(15, Math.min(40, minDimension * 0.04))
-          : 160,
-        secondaryLineWidth: isMobile 
-          ? Math.max(8, Math.min(20, minDimension * 0.02))
-          : 80,
-        shadowBlur: isMobile 
-          ? Math.max(5, Math.min(20, minDimension * 0.015))
-          : 60,
-        secondaryShadowBlur: isMobile 
-          ? Math.max(3, Math.min(10, minDimension * 0.008))
-          : 30,
+        mainLineWidth: 160,
+        secondaryLineWidth: 80,
+        shadowBlur: 60,
+        secondaryShadowBlur: 30,
         waveAmplitude: Math.max(20, Math.min(120, minDimension * 0.06)),
         points: Math.max(100, Math.min(300, Math.floor(minDimension * 0.3)))
       }
