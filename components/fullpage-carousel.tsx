@@ -60,20 +60,16 @@ const slides: CarouselSlide[] = [
     description:
       "Participação de membros da comissão na JOIA Curitiba (Atlética)",
     backgroundImage: "/slide06.jpg",
+    isCompleted: true,
   },
   {
     id: 7,
     title: "Med in Eden",
     date: "Sexta - 07.11",
     backgroundImage: "/slide07.jpg?v=3",
+    isCompleted: true,
   },
 
-  {
-    id: 9,
-    title: "Visitas Técnicas e Degustação",
-    date: "Janeiro e Fevereiro de 2026",
-    description: "Atividades práticas e degustação para o projeto",
-  },
   {
     id: 10,
     title: "Reunião de Briefing + Apresentação",
@@ -98,6 +94,12 @@ const slides: CarouselSlide[] = [
     date: "Sexta - 16.01",
     description: "Vendas de kit para calouros da turma CXIV",
     backgroundImage: "/slide13.jpg",
+  },
+  {
+    id: 9,
+    title: "Visitas Técnicas e Degustação",
+    date: "Janeiro e Fevereiro de 2026",
+    description: "Atividades práticas e degustação para o projeto",
   },
   {
     id: 14,
